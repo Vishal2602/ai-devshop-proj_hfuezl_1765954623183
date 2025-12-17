@@ -21,10 +21,10 @@ https://projhfuezl1765954623183.vercel.app
 
 | Category | Score |
 |----------|-------|
-| Performance | 96 |
+| Performance | 97 |
 | Accessibility | 85 |
 | Best Practices | 100 |
-| SEO | 90 |
+| SEO | 82 |
 
 ---
 
