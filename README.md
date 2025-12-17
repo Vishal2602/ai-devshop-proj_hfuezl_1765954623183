@@ -1,16 +1,16 @@
 # PDF Tarot Reader
 
-A whimsical web app that gives your PDFs a mystical tarot reading. Upload any PDF and receive a personalized "document destiny" complete with tarot cards, an aura type, and a certification stamp.
+A whimsical web application that transforms your PDFs into mystical tarot readings. Upload any document and receive a personalized 3-card tarot spread with aura assignment and certification stamp.
 
 ## Features
 
-- **PDF Upload**: Drag-and-drop or click to upload (10MB limit)
-- **Text Analysis**: Extracts keywords and themes from your document
-- **Tarot Reading**: 3-card spread (Past/Present/Future) based on document content
-- **Aura Assignment**: Discover your document's personality (Focus Goblin, Deadline Phantom, Meeting Magnet, etc.)
-- **Certification Stamp**: Get officially certified (Certified Chaotic Neutral, Professionally Procrastinated, etc.)
-- **PDF Export**: Download your original PDF with a custom tarot cover page
-- **Animations**: Smooth card flips, hover effects, and celebration confetti
+- **PDF Upload**: Drag-and-drop interface with file validation (10MB limit)
+- **Text Analysis**: Extracts keywords using TF-IDF style frequency analysis
+- **3-Card Tarot Reading**: Past, Present, and Future cards based on document content
+- **Aura Assignment**: 10 unique aura types (Focus Goblin, Deadline Phantom, Meeting Magnet, etc.)
+- **Certification Stamp**: Fun certifications (Certified Chaotic Neutral, Professionally Procrastinated, etc.)
+- **PDF Export**: Merges a cover page with your original document
+- **Smooth Animations**: Framer Motion powered card flips, transitions, and confetti celebration
 
 ## Tech Stack
 
@@ -28,22 +28,43 @@ A whimsical web app that gives your PDFs a mystical tarot reading. Upload any PD
 
 ## Getting Started
 
+### Prerequisites
+- Node.js 18+
+- npm
+
+### Installation
+
 ```bash
-# Install dependencies
+# Install frontend dependencies
 npm install
 
-# Start development server
+# Install backend dependencies
+cd server && npm install
+```
+
+### Development
+
+```bash
+# Start frontend (from root)
 npm run dev
 
-# Build for production
+# Start backend (from server/)
+cd server && npm start
+```
+
+### Production Build
+
+```bash
 npm run build
 ```
 
 ## API Endpoints
 
-- `POST /api/analyze` - Analyze PDF and generate reading
-- `POST /api/render` - Render cover page and merge with original
-- `GET /api/health` - Health check
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/analyze` | POST | Analyzes PDF and returns reading data |
+| `/api/render` | POST | Renders and merges PDF with cover page |
+| `/api/health` | GET | Health check endpoint |
 
 ## License
 
