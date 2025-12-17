@@ -1,0 +1,117 @@
+/**
+ * UploadView Styles
+ */
+
+.upload-view {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: var(--space-6);
+}
+
+.upload-view__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  z-index: 1;
+}
+
+/* Error display */
+.upload-view__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-error-light);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+.upload-view__error-message {
+  margin: 0;
+  color: var(--color-error);
+  font-size: var(--text-sm);
+}
+
+.upload-view__retry-button {
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-error);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.upload-view__retry-button:hover {
+  filter: brightness(1.1);
+}
+
+/* Progress indicator */
+.upload-view__progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 400px;
+}
+
+.upload-view__progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--color-soft);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.upload-view__progress-fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+.upload-view__progress-text {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Decorative elements */
+.upload-view__decoration {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  color: var(--color-primary);
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.upload-view__decoration--left {
+  left: 5%;
+  top: 20%;
+}
+
+.upload-view__decoration--right {
+  right: 5%;
+  bottom: 20%;
+}
+
+.upload-view__decoration svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .upload-view__decoration {
+    display: none;
+  }
+}

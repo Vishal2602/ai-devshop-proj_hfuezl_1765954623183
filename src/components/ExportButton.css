@@ -1,0 +1,105 @@
+.export-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 220px;
+  height: var(--button-height-lg);
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--color-text-inverse);
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  overflow: visible;
+  transition: var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.export-button:hover:not(:disabled) {
+  box-shadow: var(--shadow-glow), var(--shadow-lg);
+}
+
+.export-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.export-button--loading {
+  cursor: wait;
+  background: var(--color-primary-light);
+}
+
+.export-button--success {
+  background: var(--color-success);
+}
+
+.export-button__content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.export-button__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.export-button__icon--success {
+  animation: checkPop 0.3s ease-out;
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.export-button__spinner {
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+.export-button__spinner circle {
+  stroke-dasharray: 30 70;
+  stroke-linecap: round;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.export-button__confetti {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.export-button__confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+@media (max-width: 640px) {
+  .export-button {
+    width: 100%;
+    max-width: 280px;
+  }
+}

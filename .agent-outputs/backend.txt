@@ -1,0 +1,219 @@
+PDF TAROT READER - BACKEND INTEGRATION SUMMARY
+===============================================
+Agent: Sam (Backend Developer)
+Project ID: proj_hfuezl_1765954623183
+
+DELIVERABLES CREATED
+--------------------
+
+1. src/utils/storage.js
+   - localStorage wrapper with defensive CRUD operations
+   - Handles storage quota exceeded errors
+   - Validates data integrity with version metadata
+   - Domain-specific operations for readings, preferences, and stats
+
+2. src/hooks/useFileUpload.js
+   - PDF file validation (type, size, magic bytes)
+   - Drag/drop state management
+   - Integrates with react-dropzone
+   - Tracks upload stats to localStorage
+
+3. src/hooks/useAnalysis.js
+   - Calls POST /api/analyze endpoint
+   - Handles timeout, retry logic (2 retries)
+   - Validates response structure defensively
+   - Caches results to localStorage
+
+4. src/hooks/useExport.js
+   - Calls POST /api/render endpoint
+   - Receives PDF blob and triggers browser download
+   - Sanitizes filenames for export
+   - Handles large file timeouts (60s)
+
+5. src/hooks/useReading.js
+   - Orchestrates complete reading flow
+   - Manages view transitions (upload -> analyzing -> reading -> exporting)
+   - Controls card reveal animation state
+   - Combines all hooks into single API
+
+6. src/hooks/index.js
+   - Clean re-exports for all hooks
+   - Documents hook hierarchy
+
+API CONTRACT (Frontend expects)
+-------------------------------
+
+POST /api/analyze
+  Input: multipart/form-data with 'file' field (PDF)
+  Output: JSON
+  {
+    title: string,
+    keywords: string[],
+    aura: string,
+    cards: [
+      { position: "past", name: string, meaning: string },
+      { position: "present", name: string, meaning: string },
+      { position: "future", name: string, meaning: string }
+    ]
+  }
+  Errors:
+    - 400/422: Invalid PDF or unreadable document
+    - 500: Server error
+
+POST /api/render
+  Input: multipart/form-data with:
+    - 'file': Original PDF
+    - 'analysis': JSON string of analysis result
+  Output: application/pdf (binary)
+  Headers:
+    - Content-Type: application/pdf
+  Errors:
+    - 500: Server error
+
+INTEGRATION NOTES FOR FRONTEND
+------------------------------
+
+1. Basic usage in App.jsx:
+
+   import { useReading } from './hooks';
+
+   function App() {
+     const reading = useReading();
+
+     return (
+       <AnimatePresence mode="wait">
+         {reading.currentView === 'upload' && (
+           <UploadView
+             onDrop={reading.processFiles}
+             isDragging={reading.isDragging}
+             onDragEnter={reading.handleDragEnter}
+             onDragLeave={reading.handleDragLeave}
+             accept={reading.dropzoneAccept}
+             maxSize={reading.maxFileSize}
+             error={reading.error}
+           />
+         )}
+
+         {reading.currentView === 'analyzing' && (
+           <AnalyzingView progress={reading.analysisProgress} />
+         )}
+
+         {reading.currentView === 'reading' && (
+           <ReadingView
+             title={reading.title}
+             aura={reading.aura}
+             cards={reading.cardsWithRevealState}
+             onExport={reading.startExport}
+             canExport={reading.canExport}
+             showConfetti={reading.showConfetti}
+           />
+         )}
+       </AnimatePresence>
+     );
+   }
+
+2. TarotCard component integration:
+
+   function TarotCard({ card }) {
+     const { name, meaning, position, revealState, isRevealed } = card;
+
+     return (
+       <motion.div
+         className={`tarot-card ${position}`}
+         animate={isRevealed ? 'revealed' : 'hidden'}
+       >
+         {/* Card back shown when hidden */}
+         {/* Card front shown when revealed */}
+       </motion.div>
+     );
+   }
+
+3. ExportButton integration:
+
+   function ExportButton({ onExport, canExport, isExporting, progress }) {
+     return (
+       <button
+         onClick={onExport}
+         disabled={!canExport || isExporting}
+       >
+         {isExporting ? `Exporting... ${progress}%` : 'Export Your Reading'}
+       </button>
+     );
+   }
+
+STORAGE KEYS USED
+-----------------
+- pdf_tarot_last_reading: Most recent reading (for re-export)
+- pdf_tarot_preferences: User preferences (confetti, etc)
+- pdf_tarot_history: Last 10 readings (metadata only)
+- pdf_tarot_upload_stats: Fun metrics
+
+ERROR HANDLING STRATEGY
+-----------------------
+All hooks follow consistent error pattern:
+- error: { type: string, message: string }
+- Errors are user-friendly, not technical
+- Retry logic for transient failures
+- Specific error types for specific handling
+
+STATE MACHINE
+-------------
+VIEW_STATES: upload -> analyzing -> reading -> exporting -> reading
+UPLOAD_STATES: idle -> dragging -> validating -> uploading -> success/error
+ANALYSIS_STATES: idle -> analyzing -> success/error
+EXPORT_STATES: idle -> rendering -> success/error
+CARD_REVEAL_STATES: hidden -> revealing -> revealed
+
+CONFIGURATION
+-------------
+- API_BASE_URL: Uses VITE_API_URL env var or defaults to '/api'
+- MAX_FILE_SIZE: 10MB (per tech lead decision)
+- ANALYSIS_TIMEOUT: 30 seconds
+- EXPORT_TIMEOUT: 60 seconds
+- MAX_RETRIES: 2 (analyze), 1 (export)
+
+SECURITY CONSIDERATIONS
+-----------------------
+1. PDF magic byte verification (not just MIME type)
+2. Filename sanitization for exports
+3. Size limits enforced client-side
+4. No sensitive data stored in localStorage
+5. AbortController used for request cancellation
+
+WHAT BACKEND NEEDS TO IMPLEMENT
+-------------------------------
+1. POST /api/analyze
+   - Use multer with memory storage (no disk)
+   - Extract text with pdf-parse (first ~3000 chars)
+   - Run keyword extraction (TF-IDF or RAKE)
+   - Generate cards with rule-based system
+   - Return JSON response matching contract above
+
+2. POST /api/render
+   - Accept file + analysis JSON
+   - Create cover page with pdf-lib
+   - Merge cover with original PDF
+   - Return merged PDF as binary
+   - Set Content-Type: application/pdf header
+
+3. Validation (Zod)
+   - Validate file is PDF
+   - Validate file size <= 10MB
+   - Validate analysis JSON structure
+
+4. Error responses
+   - 400: Bad request (validation failed)
+   - 422: Unprocessable (can't read PDF)
+   - 500: Server error
+
+TESTING NOTES
+-------------
+- Test with PDFs of various sizes (1 page to 50+ pages)
+- Test with scanned PDFs (should return "mysterious document" reading)
+- Test with encrypted PDFs (should return appropriate error)
+- Test with corrupted files (magic byte check should catch)
+- Test concurrent uploads (memory management)
+
+---
+Generated by: Sam (Backend Developer)
+Status: Ready for frontend integration

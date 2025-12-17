@@ -1,0 +1,26 @@
+.aura-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  color: white;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.aura-badge__sparkle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aura-badge__sparkle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.aura-badge__text {
+  white-space: nowrap;
+}

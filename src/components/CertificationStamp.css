@@ -1,0 +1,59 @@
+.certification-stamp {
+  display: inline-block;
+  padding: var(--space-4);
+  border: 3px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  opacity: 0.85;
+}
+
+.certification-stamp__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+.certification-stamp__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+  color: var(--color-primary);
+}
+
+.certification-stamp__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-primary);
+}
+
+.certification-stamp__stars {
+  display: flex;
+  gap: var(--space-1);
+  color: var(--color-gold);
+}
+
+.certification-stamp__stars svg {
+  width: 12px;
+  height: 12px;
+}
+
+@media (max-width: 640px) {
+  .certification-stamp {
+    padding: var(--space-3);
+  }
+
+  .certification-stamp__title {
+    font-size: var(--text-xs);
+  }
+
+  .certification-stamp__stars svg {
+    width: 10px;
+    height: 10px;
+  }
+}

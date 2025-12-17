@@ -1,0 +1,19 @@
+/**
+ * Confetti Styles
+ */
+
+.confetti {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: var(--z-toast);
+}
+
+.confetti__particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}

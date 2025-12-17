@@ -1,0 +1,89 @@
+PDF TAROT READER - TECH LEAD DECISIONS
+======================================
+
+KEY DECISIONS:
+
+1. NO DATABASE
+   Files in memory only. Request comes in, gets processed, response goes out.
+   No S3, no temp directories, no cleanup jobs. Memory storage in multer,
+   GC handles the rest.
+
+2. TWO ENDPOINTS, NOT ONE
+   /analyze and /render are separate. Client brief suggests this, and it's right.
+   User can re-export without re-analyzing. Testing is cleaner. Debugging is easier.
+
+3. RULE-BASED READING FIRST
+   LLM integration is scope creep for MVP. Build a decent keyword-to-card mapping
+   system first. Make it deterministic so we can test it. LLM can be phase 2.
+
+4. TYPESCRIPT EVERYWHERE
+   Frontend and backend. Shared types for the analysis response.
+   Not negotiable.
+
+5. FRAMER MOTION FOR ANIMATIONS
+   Client specifically requested this. Good choice. Don't reinvent card flips
+   with CSS. Use the library.
+
+6. PDF-LIB FOR GENERATION
+   pdf-lib can create new pages and merge documents. It's well-maintained.
+   Don't use puppeteer/chrome for PDF generation - that's over-engineering.
+
+7. SIMPLE KEYWORD EXTRACTION
+   TF-IDF or basic frequency analysis. Don't bring in ML libraries for this.
+   We're extracting ~5 keywords from a document, not building a search engine.
+
+8. AURA LIST IS HARDCODED
+   Focus Goblin, Deadline Phantom, Meeting Magnet, etc. Pick from a curated list
+   based on keyword matches. Don't generate auras dynamically.
+
+WHAT I'M NOT BUILDING:
+
+- User accounts
+- File history
+- Saved readings
+- Analytics dashboard
+- Multiple language support
+- Custom card designs (MVP)
+- API rate limiting (add later if needed)
+
+TECH DEBT I'M ACCEPTING:
+
+- Keyword extraction will be basic. Can improve later.
+- Card meanings are hardcoded strings. Fine for MVP.
+- No tests in v1 if timeline is tight, but structure code to be testable.
+- Cover page design will be simple. Fancy layouts are polish, not core.
+
+IMPLEMENTATION ORDER:
+
+1. Backend skeleton with both endpoints (stub responses)
+2. PDF text extraction working
+3. Keyword extraction working
+4. Reading generation logic
+5. Cover page PDF creation
+6. PDF merge working
+7. Frontend dropzone + API integration
+8. Card reveal animations
+9. Export flow
+10. Polish and edge cases
+
+RISKS:
+
+- Large PDFs might be slow. Cap at 10MB, extract only first few pages.
+- Some PDFs have weird encodings. pdf-parse handles most cases.
+- Scanned PDFs have no extractable text. Return a "mysterious document" reading.
+- Memory usage with concurrent uploads. Monitor in prod, add limits if needed.
+
+FILE SIZE LIMITS:
+- Upload: 10MB max
+- If we hit memory issues, drop to 5MB
+
+STACK VERSIONS (pin these):
+- Node 20 LTS
+- React 18
+- Vite 5
+- Express 4
+- pdf-lib latest
+- pdf-parse latest
+- Framer Motion 11
+
+DONE. Ship it.

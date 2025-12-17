@@ -1,0 +1,266 @@
+/**
+ * PDF Tarot Reader - Design Tokens
+ *
+ * A mystical-meets-modern design system for transforming
+ * boring PDFs into shareable tarot experiences.
+ */
+
+:root {
+  /* ============================================
+     COLOR PALETTE
+     ============================================ */
+
+  /* Primary Colors */
+  --color-primary: #6B46C1;
+  --color-primary-hover: #805AD5;
+  --color-primary-light: #9F7AEA;
+  --color-secondary: #805AD5;
+
+  /* Text Colors */
+  --color-text: #2D3748;
+  --color-text-secondary: #4A5568;
+  --color-text-muted: #718096;
+  --color-text-inverse: #FFFFFF;
+
+  /* Background Colors */
+  --color-canvas: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-soft: #F7FAFC;
+  --color-starfield: #1A202C;
+
+  /* Accent Colors */
+  --color-gold: #F6AD55;
+  --color-rose: #ED64A6;
+  --color-sage: #68D391;
+  --color-ocean: #4299E1;
+
+  /* Semantic Colors */
+  --color-success: #48BB78;
+  --color-success-light: #C6F6D5;
+  --color-warning: #ECC94B;
+  --color-warning-light: #FEFCBF;
+  --color-error: #F56565;
+  --color-error-light: #FED7D7;
+  --color-muted: #A0AEC0;
+
+  /* Card Position Colors */
+  --color-past: #68D391;
+  --color-past-subtle: #C6F6D5;
+  --color-present: #4299E1;
+  --color-present-subtle: #BEE3F8;
+  --color-future: #ED64A6;
+  --color-future-subtle: #FED7E2;
+
+  /* Gradient Definitions */
+  --gradient-primary: linear-gradient(135deg, #6B46C1 0%, #805AD5 100%);
+  --gradient-card-back: linear-gradient(135deg, #6B46C1 0%, #553C9A 50%, #805AD5 100%);
+  --gradient-glow: radial-gradient(circle, rgba(107, 70, 193, 0.2) 0%, transparent 70%);
+  --gradient-shimmer: linear-gradient(90deg, #F7FAFC 0%, #EDF2F7 50%, #F7FAFC 100%);
+
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+
+  /* Font Families */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+
+  /* Font Sizes */
+  --text-display: 3rem;       /* 48px */
+  --text-h1: 2.25rem;         /* 36px */
+  --text-h2: 1.75rem;         /* 28px */
+  --text-h3: 1.375rem;        /* 22px */
+  --text-lg: 1.125rem;        /* 18px */
+  --text-base: 1rem;          /* 16px */
+  --text-sm: 0.875rem;        /* 14px */
+  --text-xs: 0.75rem;         /* 12px */
+
+  /* Font Weights */
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.1;
+  --leading-snug: 1.2;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.6;
+
+  /* Letter Spacing */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+
+  /* ============================================
+     SPACING
+     ============================================ */
+
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.5rem;    /* 24px */
+  --space-6: 2rem;      /* 32px */
+  --space-7: 3rem;      /* 48px */
+  --space-8: 4rem;      /* 64px */
+  --space-9: 6rem;      /* 96px */
+
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+
+  /* ============================================
+     SHADOWS
+     ============================================ */
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+
+  /* Specialized Shadows */
+  --shadow-glow: 0 0 20px rgba(107, 70, 193, 0.3);
+  --shadow-glow-sm: 0 0 10px rgba(107, 70, 193, 0.2);
+  --shadow-card: 0 4px 20px rgba(107, 70, 193, 0.15);
+  --shadow-card-hover: 0 8px 30px rgba(107, 70, 193, 0.25);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  /* ============================================
+     ANIMATION
+     ============================================ */
+
+  /* Durations */
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-normal: 240ms;
+  --duration-slow: 400ms;
+  --duration-reveal: 600ms;
+
+  /* Easing Functions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Animation Presets */
+  --transition-fast: all var(--duration-fast) var(--ease-out);
+  --transition-normal: all var(--duration-normal) var(--ease-out);
+  --transition-slow: all var(--duration-slow) var(--ease-in-out);
+
+  /* ============================================
+     LAYOUT
+     ============================================ */
+
+  /* Container */
+  --container-max: 1200px;
+  --container-narrow: 800px;
+
+  /* Breakpoints (for reference - use in media queries) */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+
+  /* Z-Index Scale */
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 300;
+  --z-popover: 400;
+  --z-toast: 500;
+
+  /* ============================================
+     COMPONENT TOKENS
+     ============================================ */
+
+  /* Tarot Card */
+  --card-width: 220px;
+  --card-width-mobile: 160px;
+  --card-aspect-ratio: 2 / 3;
+  --card-gap: var(--space-6);
+
+  /* DropZone */
+  --dropzone-border-width: 2px;
+  --dropzone-min-height: 300px;
+  --dropzone-max-width: 500px;
+
+  /* Buttons */
+  --button-height: 44px;
+  --button-height-sm: 36px;
+  --button-height-lg: 52px;
+  --button-padding-x: var(--space-5);
+  --button-padding-y: var(--space-3);
+
+  /* Focus Ring */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--color-primary);
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-reveal: 0ms;
+  }
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 640px) {
+  :root {
+    /* Slightly smaller typography on mobile */
+    --text-display: 2.5rem;
+    --text-h1: 2rem;
+    --text-h2: 1.5rem;
+    --text-h3: 1.25rem;
+
+    /* Tighter spacing on mobile */
+    --space-8: 3rem;
+    --space-9: 4rem;
+
+    /* Smaller card on mobile */
+    --card-width: var(--card-width-mobile);
+  }
+}
+
+/* ============================================
+   DARK MODE (Future Enhancement)
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /*
+     * Dark mode tokens ready for implementation.
+     * Uncomment when dark mode is added.
+     *
+     * --color-canvas: #0D1117;
+     * --color-surface: #161B22;
+     * --color-surface-elevated: #21262D;
+     * --color-text: #F0F6FC;
+     * --color-text-secondary: #C9D1D9;
+     * --color-text-muted: #8B949E;
+     */
+  }
+}

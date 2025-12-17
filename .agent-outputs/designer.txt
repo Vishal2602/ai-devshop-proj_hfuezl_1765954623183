@@ -1,0 +1,254 @@
+PDF TAROT READER - DESIGN DECISIONS
+====================================
+Designer: Riley
+Project: proj_hfuezl_1765954623183
+
+CORE DESIGN PHILOSOPHY
+----------------------
+
+1. "Mystical Meets Modern"
+   The challenge was balancing whimsy with professionalism. We wanted users
+   to feel delighted, not embarrassed to share their readings. Think of it
+   as the difference between a cheesy fortune teller booth and a beautifully
+   designed tarot deck you'd find at a design museum gift shop.
+
+2. Generous Whitespace
+   The tarot cards are the star. Everything else - buttons, badges, text -
+   should recede and let the reading breathe. Dense UIs feel anxious.
+   Our users are here to have fun, not fill out tax forms.
+
+3. Restraint in Animation
+   Every animation has a purpose. The card flip feels magical because it's
+   the ONLY elaborate animation. If everything bounced and sparkled, nothing
+   would feel special. We're building an experience, not a casino.
+
+
+COLOR PALETTE DECISIONS
+-----------------------
+
+Primary: Cosmic Purple (#6B46C1)
+- Deep purple conveys mysticism without being dark or heavy
+- Has excellent contrast with white backgrounds
+- Differentiates us from the sea of blue SaaS products
+- Accessible: passes WCAG AA for text on white
+
+Why not darker purple?
+- Darker purples can feel corporate or heavy
+- Our lighter purple feels approachable and fun
+- Still reads as "mystical" without being goth
+
+Card Position Colors:
+- Past (Sage Green): Growth, history, what was planted
+- Present (Ocean Blue): Current state, clarity, now
+- Future (Twilight Rose): Warning, change, what's coming
+- These aren't arbitrary - they have emotional resonance with the card meanings
+
+Gold Accents:
+- Used sparingly for stars, highlights, special moments
+- Creates hierarchy and draws the eye to important elements
+- Classic pairing with purple (royalty, mysticism)
+
+
+TYPOGRAPHY DECISIONS
+--------------------
+
+Playfair Display for Headlines:
+- Serif fonts feel editorial, timeless, slightly mystical
+- Beautiful contrast with the clean sans-serif body
+- The italic variant could be used for card names (extra flourish)
+- Not overused - only headlines and card names
+
+Inter for Body:
+- Extremely legible at all sizes
+- Variable font with excellent rendering
+- Feels modern and trustworthy
+- Doesn't fight for attention with the decorative elements
+
+Type Scale (based on 1.25 ratio):
+- Consistent visual rhythm
+- Clear hierarchy without dramatic jumps
+- Body text at 16px for comfortable reading
+
+
+SPACING SYSTEM
+--------------
+
+8px grid, but with named tokens:
+- Developers don't have to do math
+- Consistent rhythm across all components
+- Easy to adjust globally if needed
+
+Key insight: The "breathing room" around the card spread is what makes
+it feel premium. Cramped layouts feel cheap.
+
+
+ANIMATION PHILOSOPHY
+--------------------
+
+Card Flip (600ms, spring easing):
+- This is THE moment. The reveal.
+- Spring easing adds personality - it slightly overshoots and settles
+- 600ms is slow enough to feel intentional, fast enough to not drag
+- Staggered entrance builds anticipation
+
+Micro-interactions (120-150ms):
+- Hover states need to feel immediate
+- Too slow = laggy, too fast = jarring
+- Subtle scale (1.02) + shadow creates "lift" effect
+
+Reduced Motion Support:
+- All decorative animations respect prefers-reduced-motion
+- Essential state changes still work, just instant
+- Accessibility isn't optional
+
+
+COMPONENT DECISIONS
+-------------------
+
+DropZone:
+- Large, inviting target area (min 300px height)
+- Dashed border = universal "drop here" signifier
+- Active state with glow makes it clear when dragging
+- Max width prevents it from feeling overwhelming on large screens
+
+Tarot Cards:
+- 2:3 aspect ratio matches real tarot cards
+- 220px width on desktop is large enough to read, small enough for three in a row
+- Position accent (colored left edge) provides instant visual identification
+- Shadow gives depth without being heavy
+
+AuraBadge:
+- Pill shape (radius-full) makes it feel like a label/tag
+- Gradient background varies by aura type
+- Small size keeps it from competing with cards
+
+ExportButton:
+- Primary action = primary color
+- Large enough touch target for mobile (44px min)
+- Clear loading and success states
+- "Download" icon makes action obvious
+
+
+RESPONSIVE STRATEGY
+-------------------
+
+Mobile-first thinking:
+- Cards stack vertically on small screens
+- Typography scales down gracefully
+- Touch targets stay accessible (44px minimum)
+- Reduce complexity, not features
+
+Breakpoints:
+- 640px: Mobile to tablet
+- 768px: Card layout switches from vertical to horizontal
+- 1024px+: Full desktop experience
+
+
+PDF COVER PAGE DESIGN
+---------------------
+
+Dark background (#1A202C):
+- Creates dramatic contrast with the web UI
+- Looks professional when printed
+- Works well in document viewers
+
+Simplified card representations:
+- Vector graphics scale perfectly
+- No raster images to worry about
+- Consistent rendering across PDF viewers
+
+Stamp rotation (-3deg):
+- Subtle imperfection makes it feel hand-stamped
+- Adds playfulness without being chaotic
+- Classic "certification" aesthetic
+
+
+WHAT WE EXPLICITLY AVOIDED
+--------------------------
+
+1. Excessive gradients and glows
+   - One glow effect (card hover) is elegant
+   - Everything glowing is overwhelming
+
+2. Dark mode in MVP
+   - Tokens are ready for it
+   - Focus on nailing light mode first
+
+3. Complex illustrations
+   - Simple geometric card symbols scale better
+   - Faster to render in PDF
+   - More flexible across contexts
+
+4. Busy patterns
+   - Clean surfaces let content shine
+   - Patterns would compete with card artwork
+
+5. Too many fonts
+   - Two fonts (display + body) is plenty
+   - Third font only for technical elements
+
+
+ACCESSIBILITY NOTES
+-------------------
+
+- All colors pass WCAG AA contrast
+- Focus states are visible and styled
+- Card reveals are announced to screen readers
+- Motion can be disabled system-wide
+- Touch targets are minimum 44px
+- No information conveyed by color alone
+
+
+FUTURE CONSIDERATIONS
+---------------------
+
+1. Dark Mode
+   - Tokens prepared, just needs implementation
+   - Purple would pop beautifully on dark backgrounds
+
+2. Custom Card Art
+   - Design system supports swappable card imagery
+   - Could offer themed decks in future
+
+3. Social Sharing Cards
+   - Open Graph images should use same design language
+   - Gradient backgrounds would work well
+
+4. Animation Expansion
+   - Confetti on export could be more elaborate
+   - Card dealing animation for initial spread
+
+
+FILES CREATED
+-------------
+
+1. DESIGN.md
+   - Complete design system documentation
+   - Color palette with hex values
+   - Typography specs
+   - Spacing system
+   - Component specifications
+   - Animation specs
+   - Responsive breakpoints
+
+2. src/styles/variables.css
+   - All design tokens as CSS custom properties
+   - Organized by category
+   - Includes responsive adjustments
+   - Reduced motion support
+   - Dark mode tokens (commented, ready for future)
+
+
+IMPLEMENTATION NOTES FOR DEVELOPERS
+-----------------------------------
+
+- Import variables.css at the root of the app
+- Use CSS variables for all colors, spacing, typography
+- Framer Motion variants can reference duration/easing tokens
+- The design system is intentionally minimal - don't over-engineer
+- When in doubt, add more whitespace
+
+
+---
+Generated by Riley (Designer)
+Project: PDF Tarot Reader
